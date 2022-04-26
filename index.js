@@ -33,10 +33,37 @@ function createStore(reducer) {
 
 // App Code
 function todos(state = [], action) {
-  if (action.type === "ADD_TODO") {
-    return state.concat([action.todo]);
+  switch (action.type) {
+    case "ADD_TODO":
+      return state.concat([action.todo]);
+    case "REMOVE_TODO":
+      return state.filter((todo) => todo.id !== action.id);
+    case "TOGGLE_TODO":
+      return state.map((todo) =>
+        todo.id !== action.id
+          ? todo
+          : Object.assign({}, todo, { complete: !todo.complete })
+      );
+    default:
+      return state;
   }
-  return state;
+}
+
+function goals(state = [], action) {
+  switch (action.type) {
+    case "ADD_GOAL":
+      return state.concat([action.goal]);
+    case "REMOVE_GOAL":
+      return state.filter((goal) => goal.id !== action.id);
+    case "TOGGLE_GOAL":
+      return state.map((goal) =>
+        goal.id !== action.id
+          ? goal
+          : Object.assign({}, goal, { complete: !goal.complete })
+      );
+    default:
+      return state;
+  }
 }
 
 const store = createStore(todos);
@@ -51,19 +78,3 @@ store.dispatch({
     complete: false,
   },
 });
-
-// function appReducer(state, action) {
-//   if (action.type === "DELETE_FLAVOR") {
-//     return state.filter((s) => s.flavor !== action.flavor);
-//   }
-
-//   return state;
-// }
-
-// appReducer(
-//   [
-//     { flavor: "Chocolate", count: 36 },
-//     { flavor: "Vanilla", count: 210 },
-//   ],
-//   { type: "DELETE_FLAVOR", flavor: "Vanilla" }
-// );
