@@ -39,6 +39,19 @@ function todos(state = [], action) {
   return state;
 }
 
+const store = createStore(todos);
+store.subscribe(() => {
+  console.log("The new state is: ", store.getState());
+});
+store.dispatch({
+  type: "ADD_TODO",
+  todo: {
+    id: 0,
+    name: "learn Redux",
+    complete: false,
+  },
+});
+
 // function appReducer(state, action) {
 //   if (action.type === "DELETE_FLAVOR") {
 //     return state.filter((s) => s.flavor !== action.flavor);

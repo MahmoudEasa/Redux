@@ -6,7 +6,7 @@
 
 `createStore(reducer)`
 
-The store should have four parts
+The store should have four parts:
 
 1. The state
 2. Get the state.
@@ -16,3 +16,7 @@ The store should have four parts
 ### App Code
 
 `appReducer(state, action)`
+
+### Use createStore To Add
+
+`createStore(todos)`
