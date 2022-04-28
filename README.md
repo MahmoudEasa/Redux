@@ -2,6 +2,8 @@
 
 ## Managing State
 
+## Create Redux myself
+
 ### Library Code
 
 `createStore(reducer)`
