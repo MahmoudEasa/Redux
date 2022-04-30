@@ -65,6 +65,17 @@ function receiveDataAction(todos, goals) {
   };
 }
 
+function handleDeleteTodo(todo) {
+  return (dispatch) => {
+    dispatch(removeTodoAction(todo.id));
+
+    return API.deleteTodo(todo.id).catch(() => {
+      dispatch(addTodoAction(todo));
+      alert("An error occurred. Try again.");
+    });
+  };
+}
+
 function todos(state = [], action) {
   switch (action.type) {
     case ADD_TODO:
@@ -112,12 +123,21 @@ function loading(state = true, action) {
   }
 }
 
+// const thunk = (store) => (next) => (action) => {
+//   if (typeof action === "function") {
+//     return action(store.dispatch);
+//   }
+
+//   return next(action);
+// };
+
 const store = Redux.createStore(
   Redux.combineReducers({
     todos,
     goals,
     loading,
-  })
+  }),
+  Redux.applyMiddleware(ReduxThunk.default)
 );
 
 // App
@@ -154,13 +174,9 @@ class Todos extends React.Component {
   };
 
   removeItem = (todo) => {
-    this.props.store.dispatch(removeTodoAction(todo.id));
-
-    return API.deleteTodo(todo.id).catch(() => {
-      this.props.store.dispatch(addTodoAction(todo));
-      alert("An error occurred. Try again.");
-    });
+    this.props.store.dispatch(handleDeleteTodo(todo));
   };
+
   toggleItem = (id) => {
     this.props.store.dispatch(toggleTodoAction(id));
     return API.saveTodoToggle(id).catch(() => {
