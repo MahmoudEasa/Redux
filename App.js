@@ -256,9 +256,9 @@ class Todos extends React.Component {
   }
 }
 
-const ConnectedTodo = connect((state) => {
-  todos: state.todos;
-})(Todos);
+const ConnectedTodo = connect((state) => ({
+  todos: state.todos,
+}))(Todos);
 
 class Goals extends React.Component {
   addItem = (e) => {
@@ -291,9 +291,9 @@ class Goals extends React.Component {
   }
 }
 
-const ConnectedGoals = connect((state) => {
-  goals: state.goals;
-})(Goals);
+const ConnectedGoals = connect((state) => ({
+  goals: state.goals,
+}))(Goals);
 
 class App extends React.Component {
   componentDidMount() {
@@ -314,9 +314,9 @@ class App extends React.Component {
   }
 }
 
-const ConnectedApp = connect((state) => {
-  loading: state.loading;
-})(App);
+const ConnectedApp = connect((state) => ({
+  loading: state.loading,
+}))(App);
 
 const Context = React.createContext();
 
