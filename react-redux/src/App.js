@@ -1,17 +1,29 @@
 import React from "react";
-import "./App.css";
-import Parent from "./Components/Parent";
-export const UserContext = React.createContext();
+import { connect } from "react-redux";
 
-function App() {
-  const name = "Tyler";
-  return (
-    <div className="App">
-      <UserContext.Provider value={name}>
-        <Parent />
-      </UserContext.Provider>
-    </div>
-  );
+import ConnectedGoals from "./components/Goals";
+import ConnectedTodo from "./components/Todos";
+import { handleInitialData } from "./actions/shared";
+
+class App extends React.Component {
+  componentDidMount() {
+    const { dispatch } = this.props;
+
+    dispatch(handleInitialData());
+  }
+  render() {
+    if (this.props.loading === true) {
+      return <h3>Loading...</h3>;
+    }
+    return (
+      <div>
+        <ConnectedTodo />
+        <ConnectedGoals />
+      </div>
+    );
+  }
 }
 
-export default App;
+export default connect((state) => ({
+  loading: state.loading,
+}))(App);

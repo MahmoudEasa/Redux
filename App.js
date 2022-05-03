@@ -10,9 +10,11 @@ const generateId = () => {
 const ADD_TODO = "ADD_TODO";
 const REMOVE_TODO = "REMOVE_TODO";
 const TOGGLE_TODO = "TOGGLE_TODO";
+
 const ADD_GOAL = "ADD_GOAL";
 const REMOVE_GOAL = "REMOVE_GOAL";
 const TOGGLE_GOAL = "TOGGLE_GOAL";
+
 const RECEIVE_DATA = "RECEIVE_DATA";
 
 const addTodoAction = (todo) => {
@@ -65,17 +67,6 @@ const receiveDataAction = (todos, goals) => {
   };
 };
 
-const handleDeleteTodo = (todo) => {
-  return (dispatch) => {
-    dispatch(removeTodoAction(todo.id));
-
-    return API.deleteTodo(todo.id).catch(() => {
-      dispatch(addTodoAction(todo));
-      alert("An error occurred. Try again.");
-    });
-  };
-};
-
 const handleAddItem = (name, cb) => {
   return (dispatch) => {
     API.saveTodo(name)
@@ -86,6 +77,17 @@ const handleAddItem = (name, cb) => {
       .catch(() => {
         alert("There was an error. Try again.");
       });
+  };
+};
+
+const handleDeleteTodo = (todo) => {
+  return (dispatch) => {
+    dispatch(removeTodoAction(todo.id));
+
+    return API.deleteTodo(todo.id).catch(() => {
+      dispatch(addTodoAction(todo));
+      alert("An error occurred. Try again.");
+    });
   };
 };
 
